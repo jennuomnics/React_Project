@@ -95,7 +95,7 @@ const navigate = useNavigate();
         <DropdownMenuSeparator />
 
         {/* Menu Items */}
-        <DropdownMenuItem asChild>
+        {/* <DropdownMenuItem asChild>
           <Link
             to="/public-profile/profiles/default"
             className="flex items-center gap-2"
@@ -103,10 +103,10 @@ const navigate = useNavigate();
             <IdCard />
             Public Profile
           </Link>
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
         <DropdownMenuItem asChild>
           <Link
-            to="/account/home/user-profile"
+            to="/user-profile"
             className="flex items-center gap-2"
           >
             <UserCircle />
@@ -115,7 +115,7 @@ const navigate = useNavigate();
         </DropdownMenuItem>
 
         {/* My Account Submenu */}
-        <DropdownMenuSub>
+        {/* <DropdownMenuSub>
           <DropdownMenuSubTrigger className="flex items-center gap-2">
             <Settings />
             My Account
@@ -176,9 +176,9 @@ const navigate = useNavigate();
               </Link>
             </DropdownMenuItem>
           </DropdownMenuSubContent>
-        </DropdownMenuSub>
+        </DropdownMenuSub> */}
 
-        <DropdownMenuItem asChild>
+        {/* <DropdownMenuItem asChild>
           <Link
             to="https://devs.keenthemes.com"
             className="flex items-center gap-2"
@@ -186,10 +186,10 @@ const navigate = useNavigate();
             <SquareCode />
             Dev Forum
           </Link>
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
 
         {/* Language Submenu with Radio Group */}
-        <DropdownMenuSub>
+        {/* <DropdownMenuSub>
           <DropdownMenuSubTrigger className="flex items-center gap-2 [&_[data-slot=dropdown-menu-sub-trigger-indicator]]:hidden hover:[&_[data-slot=badge]]:border-input data-[state=open]:[&_[data-slot=badge]]:border-input">
             <Globe />
             <span className="flex items-center justify-between gap-2 grow relative">
@@ -233,7 +233,7 @@ const navigate = useNavigate();
               ))}
             </DropdownMenuRadioGroup>
           </DropdownMenuSubContent>
-        </DropdownMenuSub>
+        </DropdownMenuSub> */}
 
         <DropdownMenuSeparator />
 

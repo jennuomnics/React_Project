@@ -18,10 +18,10 @@ export function AccountUserProfilePage() {
 
   return (
     <Fragment>
-      <PageNavbar />
+   
       {settings?.layout === 'demo1' && (
         <Container>
-          <Toolbar>
+          {/* <Toolbar>
             <ToolbarHeading>
               <ToolbarPageTitle />
               <ToolbarDescription>
@@ -36,7 +36,7 @@ export function AccountUserProfilePage() {
                 <Link to="#">Account Settings</Link>
               </Button>
             </ToolbarActions>
-          </Toolbar>
+          </Toolbar> */}
         </Container>
       )}
       <Container>

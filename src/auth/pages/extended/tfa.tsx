@@ -1,12 +1,27 @@
+;
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useState } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { MoveLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { toAbsoluteUrl } from '@/lib/helpers';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+
+
+;
+
+
+
+
+
+
+
+
+
+
 
 const validationSchema = (usingAuthApp: boolean) =>
   Yup.object().shape({
@@ -18,8 +33,10 @@ const validationSchema = (usingAuthApp: boolean) =>
               'len',
               'Please Enter All 6 Digits',
               (val) =>
-                val && val.length === 6 && val.every((v) => /^\d$/.test(v)),
-            ),
+                Array.isArray(val) &&
+                val.join('').length === 6 &&
+                val.every((v) => /^\d$/.test(v ?? '')),
+            )
         }
       : {
           recoveryCode: Yup.string().required('Recovery code is required'),
@@ -28,8 +45,8 @@ const validationSchema = (usingAuthApp: boolean) =>
 
 const TwoFactorAuth = () => {
   const [usingAuthApp, setUsingAuthApp] = useState(true);
-
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const navigate = useNavigate()
 
   const initialValues = {
     authCode: Array(6).fill(''),
@@ -40,10 +57,11 @@ const TwoFactorAuth = () => {
     if (usingAuthApp) {
       const fullCode = values.authCode.join('');
       console.log('Submitting Authenticator Code:', fullCode);
-      
+      navigate('/')
+     
     } else {
       console.log('Submitting Recovery Code:', values.recoveryCode);
-      
+      navigate('/')
     }
   };
 
@@ -76,6 +94,8 @@ const TwoFactorAuth = () => {
         validationSchema={validationSchema(usingAuthApp)}
         onSubmit={handleSubmit}
         enableReinitialize
+        validateOnChange={false} 
+        validateOnBlur={false} 
       >
         {({ values, setFieldValue }) => (
           <Form className="flex flex-col gap-4">
@@ -100,7 +120,6 @@ const TwoFactorAuth = () => {
                             const newCode = [...values.authCode];
                             newCode[index] = val;
                             setFieldValue('authCode', newCode);
-                            // Move to next input
                             if (index < inputRefs.current.length - 1) {
                               inputRefs.current[index + 1]?.focus();
                             }
@@ -143,10 +162,10 @@ const TwoFactorAuth = () => {
                     className="text-sm text-red-500 mt-1 text-center"
                   />
                 </div>
+                
               )}
             </div>
 
-        
             {usingAuthApp && (
               <ErrorMessage
                 name="authCode"

@@ -175,7 +175,7 @@ export function AppRoutingSetup() {
             element={<AccountGetStartedPage />}
           />
           <Route
-            path="/account/home/user-profile"
+            path="/user-profile"
             element={<AccountUserProfilePage />}
           />
           <Route

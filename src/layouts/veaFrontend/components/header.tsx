@@ -5,14 +5,7 @@ import { AppsDropdownMenu } from '@/partials/topbar/apps-dropdown-menu';
 import { ChatSheet } from '@/partials/topbar/chat-sheet';
 import { NotificationsSheet } from '@/partials/topbar/notifications-sheet';
 import { UserDropdownMenu } from '@/partials/topbar/user-dropdown-menu';
-import {
-  Bell,
-  LayoutGrid,
-  Menu,
-  MessageCircleMore,
-  Search,
-  SquareChevronRight,
-} from 'lucide-react';
+import { Bell, LayoutGrid, Menu, MessageCircleMore, Search, SquareChevronRight } from 'lucide-react';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { toAbsoluteUrl } from '@/lib/helpers';
@@ -20,18 +13,13 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useScrollPosition } from '@/hooks/use-scroll-position';
 import { Button } from '@/components/ui/button';
-import {
-  Sheet,
-  SheetBody,
-  SheetContent,
-  SheetHeader,
-  SheetTrigger,
-} from '@/components/ui/sheet';
+import { Sheet, SheetBody, SheetContent, SheetHeader, SheetTrigger } from '@/components/ui/sheet';
 import { Container } from '@/components/common/container';
 import { Breadcrumb } from './breadcrumb';
 import { MegaMenu } from './mega-menu';
 import { MegaMenuMobile } from './mega-menu-mobile';
 import { SidebarMenu } from './sidebar-menu';
+
 
 export function Header() {
   const [isSidebarSheetOpen, setIsSidebarSheetOpen] = useState(false);
@@ -61,8 +49,10 @@ export function Header() {
         <div className="flex gap-1 lg:hidden items-center gap-2.5">
           <Link to="/" className="shrink-0">
             <img
-              src={toAbsoluteUrl('/media/app/mini-logo.svg')}
-              className="h-[25px] w-full"
+              src={toAbsoluteUrl('/media/minilogo.png')}
+              className="small-logo h-[33px] max-w-none"
+              // src={toAbsoluteUrl('/media/app/mini-logo.svg')}
+              // className="h-[25px] w-full"
               alt="mini-logo"
             />
           </Link>
@@ -114,12 +104,14 @@ export function Header() {
           </div>
         </div>
 
+        <Breadcrumb />
+
         {/* Main Content (MegaMenu or Breadcrumbs) */}
-        {pathname.startsWith('/account') ? (
+        {/* {pathname.startsWith('/account') ? (
           <Breadcrumb />
         ) : (
           !mobileMode && <MegaMenu />
-        )}
+        )} */}
 
         {/* HeaderTopbar */}
         <div className="flex items-center gap-3">
@@ -127,7 +119,7 @@ export function Header() {
             <StoreClientTopbar />
           ) : (
             <>
-              {!mobileMode && (
+              {/* {!mobileMode && (
                 <SearchDialog
                   trigger={
                     <Button
@@ -140,8 +132,8 @@ export function Header() {
                     </Button>
                   }
                 />
-              )}
-              <NotificationsSheet
+              )} */}
+              {/* <NotificationsSheet
                 trigger={
                   <Button
                     variant="ghost"
@@ -152,8 +144,8 @@ export function Header() {
                     <Bell className="size-4.5!" />
                   </Button>
                 }
-              />
-              <ChatSheet
+              /> */}
+              {/* <ChatSheet
                 trigger={
                   <Button
                     variant="ghost"
@@ -164,8 +156,8 @@ export function Header() {
                     <MessageCircleMore className="size-4.5!" />
                   </Button>
                 }
-              />
-              <AppsDropdownMenu
+              /> */}
+              {/* <AppsDropdownMenu
                 trigger={
                   <Button
                     variant="ghost"
@@ -176,7 +168,7 @@ export function Header() {
                     <LayoutGrid className="size-4.5!" />
                   </Button>
                 }
-              />
+              /> */}
               <UserDropdownMenu
                 trigger={
                   <img

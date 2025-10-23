@@ -8,6 +8,9 @@ import {
   StartNow,
   Work,
 } from './components';
+import { ChangeEmail } from './components/changeEmail';
+import { ChangePassword } from './components/changePassword';
+import { TwoFactorCard } from './components/TwoFactorCard';
 
 export function AccountUserProfileContent() {
   return (
@@ -15,17 +18,20 @@ export function AccountUserProfileContent() {
       <div className="col-span-1">
         <div className="grid gap-5 lg:gap-7.5">
           <PersonalInfo />
-          <BasicSettings title="Basic Settings" />
-          <Work />
-          <CommunityBadges />
+          {/* <BasicSettings title="Basic Settings" /> */}
+          {/* <Work /> */}
+          {/* <CommunityBadges /> */}
         </div>
       </div>
       <div className="col-span-1">
         <div className="grid gap-5 lg:gap-7.5">
-          <StartNow />
-          <CalendarAccounts />
-          <Connections url="#" />
-          <RecentUploads title="My Files" />
+          <ChangeEmail />
+          <ChangePassword />
+          <TwoFactorCard />
+          {/* <StartNow /> */}
+          {/* <CalendarAccounts /> */}
+          {/* <Connections url="#" /> */}
+          {/* <RecentUploads title="My Files" /> */}
         </div>
       </div>
     </div>

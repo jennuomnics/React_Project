@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { useSettings } from '@/providers/settings-provider';
 import { Button } from '@/components/ui/button';
 
+
 export function SidebarHeader() {
   const { settings, storeOption } = useSettings();
 
@@ -20,25 +21,33 @@ export function SidebarHeader() {
       <Link to="/">
         <div className="dark:hidden">
           <img
-            src={toAbsoluteUrl('/media/app/default-logo.svg')}
-            className="default-logo h-[22px] max-w-none"
+            src={toAbsoluteUrl('/media/logo3.png')}
+            className="default-logo h-[53px] w-[180px]"
+            // src={toAbsoluteUrl('/media/app/default-logo.svg')}
+
             alt="Default Logo"
           />
           <img
-            src={toAbsoluteUrl('/media/app/mini-logo.svg')}
-            className="small-logo h-[22px] max-w-none"
+            src={toAbsoluteUrl('/media/minilogo.png')}
+            className="small-logo h-[33px] max-w-none"
+            // src={toAbsoluteUrl('/media/app/mini-logo.svg')}
+
             alt="Mini Logo"
           />
         </div>
         <div className="hidden dark:block">
           <img
-            src={toAbsoluteUrl('/media/app/default-logo-dark.svg')}
-            className="default-logo h-[22px] max-w-none"
+            src={toAbsoluteUrl('/media/logo3.png')}
+            className="default-logo h-[53px] w-[180px]"
+            // src={toAbsoluteUrl('/media/app/default-logo-dark.svg')}
+            // className="default-logo h-[22px] max-w-none"
             alt="Default Dark Logo"
           />
           <img
-            src={toAbsoluteUrl('/media/app/mini-logo.svg')}
-            className="small-logo h-[22px] max-w-none"
+            src={toAbsoluteUrl('/media/minilogo.png')}
+            className="small-logo h-[33px] max-w-none"
+            // src={toAbsoluteUrl('/media/app/mini-logo.svg')}
+            // className="small-logo h-[22px] max-w-none"
             alt="Mini Logo"
           />
         </div>

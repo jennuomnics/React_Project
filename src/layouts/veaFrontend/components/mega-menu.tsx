@@ -110,7 +110,7 @@ export function MegaMenu() {
         <NavigationMenuItem>
           <NavigationMenuTrigger
             className={cn(linkClass)}
-            data-active={hasActiveChild(authItem.children) || undefined}
+            data-active={hasActiveChild(authItem?.children) || undefined}
           >
             {authItem.title}
           </NavigationMenuTrigger>

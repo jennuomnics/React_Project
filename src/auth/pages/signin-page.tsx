@@ -23,7 +23,8 @@ export function SignInPage() {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [is2FAEnable,setIs2FAEnable] = useState(true)
-
+  const [showPasswordValid,setShowPasswordValid] = useState(false)
+ 
   // Check for success message from password reset or error messages
   useEffect(() => {
     const pwdReset = searchParams.get('pwd_reset');
@@ -77,6 +78,10 @@ export function SignInPage() {
     try {
       setIsProcessing(true);
       setError(null);
+      if(values.password.length === 0) {
+        setShowPasswordValid(true)
+      }
+      
 
       console.log('Attempting to sign in with email:', values.email);
 
@@ -140,6 +145,7 @@ export function SignInPage() {
     }
   };
 console.log("sign in page")
+console.log("",form.formState)
   return (
     <>
       {/* <img
@@ -247,8 +253,10 @@ console.log("sign in page")
                 <div className="relative">
                   <Input
                     placeholder="Your password"
-                    type={passwordVisible ? 'text' : 'password'} // Toggle input type
+                    type={passwordVisible ? 'text' : 'password'} 
+                 className={`${showPasswordValid ? 'border-red-500 border' : ''}`}
                     {...field}
+                  
                   />
                   <Button
                     type="button"
