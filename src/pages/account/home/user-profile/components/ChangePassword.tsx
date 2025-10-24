@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 
+
 const ChangePassword = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentPasswordVisible, setCurrentPasswordVisible] = useState(false);
@@ -16,14 +17,6 @@ const ChangePassword = () => {
   const [passwordInfo, setPasswordInfo] = useState({
     lastChanged: 'Password last changed 2 months ago',
   });
-
-  const handleEdit = () => {
-    setIsEditing((prev) => !prev);
-  };
-
-  const handleCancel = () => {
-    setIsEditing(false);
-  };
 
   const passwordValidationSchema = Yup.object().shape({
     currentPassword: Yup.string()
@@ -53,9 +46,25 @@ const ChangePassword = () => {
     <Card className="min-w-full">
       <CardHeader className="flex justify-between items-center">
         <CardTitle>Change Password</CardTitle>
-        <Button variant="ghost" mode="icon" onClick={handleEdit}>
-          <SquarePen size={16} className="text-blue-500" />
-        </Button>
+
+        {isEditing ? (
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => setIsEditing(false)}>
+              Cancel
+            </Button>
+            <Button form="changePasswordForm" type="submit">
+              Submit
+            </Button>
+          </div>
+        ) : (
+          <Button
+            variant="ghost"
+            mode="icon"
+            onClick={() => setIsEditing(true)}
+          >
+            <SquarePen size={16} className="text-blue-500" />
+          </Button>
+        )}
       </CardHeader>
 
       <CardContent className="kt-scrollable-x-auto pb-3 p-0">
@@ -86,6 +95,7 @@ const ChangePassword = () => {
                 </TableCell>
                 <TableCell className="py-3 text-secondary-foreground text-sm font-normal">
                   <Formik
+                    id="changePasswordForm"
                     initialValues={{
                       currentPassword: '',
                       newPassword: '',
@@ -93,27 +103,36 @@ const ChangePassword = () => {
                     }}
                     validationSchema={passwordValidationSchema}
                     onSubmit={handlePasswordSubmit}
-                    validateOnChange={false}
-                    validateOnBlur={true}
                   >
-                    {({ isSubmitting }) => (
-                      <Form className="flex flex-col gap-4">
-                        {/* Current Password */}
+                    {({
+                      errors,
+                      touched,
+                      handleBlur,
+                      handleChange,
+                      values,
+                    }) => (
+                      <Form
+                        id="changePasswordForm"
+                        className="flex flex-col gap-4"
+                      >
                         <div className="flex flex-col">
                           <div className="relative">
-                            <Field name="currentPassword">
-                              {({ field }: any) => (
-                                <Input
-                                  {...field}
-                                  type={
-                                    currentPasswordVisible ? 'text' : 'password'
-                                  }
-                                  placeholder="Enter current password"
-                                  className="w-full pr-10"
-                                  onBlur={field.onBlur}
-                                />
-                              )}
-                            </Field>
+                            <Input
+                              name="currentPassword"
+                              type={
+                                currentPasswordVisible ? 'text' : 'password'
+                              }
+                              placeholder="Enter current password"
+                              value={values.currentPassword}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              className={`w-full pr-10 border transition-colors ${
+                                errors.currentPassword &&
+                                touched.currentPassword
+                                  ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                                  : 'border-input focus:border-primary focus:ring-primary'
+                              }`}
+                            />
                             <button
                               type="button"
                               onClick={() =>
@@ -141,22 +160,21 @@ const ChangePassword = () => {
                           />
                         </div>
 
-                        {/* New Password */}
                         <div className="flex flex-col">
                           <div className="relative">
-                            <Field name="newPassword">
-                              {({ field }: any) => (
-                                <Input
-                                  {...field}
-                                  type={
-                                    newPasswordVisible ? 'text' : 'password'
-                                  }
-                                  placeholder="Enter new password"
-                                  className="w-full pr-10"
-                                  onBlur={field.onBlur}
-                                />
-                              )}
-                            </Field>
+                            <Input
+                              name="newPassword"
+                              type={newPasswordVisible ? 'text' : 'password'}
+                              placeholder="Enter new password"
+                              value={values.newPassword}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              className={`w-full pr-10 border transition-colors ${
+                                errors.newPassword && touched.newPassword
+                                  ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                                  : 'border-input focus:border-primary focus:ring-primary'
+                              }`}
+                            />
                             <button
                               type="button"
                               onClick={() => setNewPasswordVisible((v) => !v)}
@@ -182,22 +200,24 @@ const ChangePassword = () => {
                           />
                         </div>
 
-                        {/* Confirm Password */}
                         <div className="flex flex-col">
                           <div className="relative">
-                            <Field name="confirmPassword">
-                              {({ field }: any) => (
-                                <Input
-                                  {...field}
-                                  type={
-                                    confirmPasswordVisible ? 'text' : 'password'
-                                  }
-                                  placeholder="Confirm new password"
-                                  className="w-full pr-10"
-                                  onBlur={field.onBlur}
-                                />
-                              )}
-                            </Field>
+                            <Input
+                              name="confirmPassword"
+                              type={
+                                confirmPasswordVisible ? 'text' : 'password'
+                              }
+                              placeholder="Confirm new password"
+                              value={values.confirmPassword}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              className={`w-full pr-10 border transition-colors ${
+                                errors.confirmPassword &&
+                                touched.confirmPassword
+                                  ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                                  : 'border-input focus:border-primary focus:ring-primary'
+                              }`}
+                            />
                             <button
                               type="button"
                               onClick={() =>
@@ -223,24 +243,6 @@ const ChangePassword = () => {
                             component="div"
                             className="text-sm text-red-500 mt-1 text-left"
                           />
-                        </div>
-
-                        <div className="flex gap-2 mt-2">
-                          <Button
-                            type="submit"
-                            disabled={isSubmitting}
-                            className="grow"
-                          >
-                            Change Password
-                          </Button>
-                          <Button
-                            type="button"
-                            variant="outline"
-                            className="grow"
-                            onClick={handleCancel}
-                          >
-                            Cancel
-                          </Button>
                         </div>
                       </Form>
                     )}

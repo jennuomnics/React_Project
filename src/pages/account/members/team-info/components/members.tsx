@@ -1,4 +1,4 @@
-'use client';
+
 
 import { useMemo, useState } from 'react';
 import { DropdownMenu } from '@radix-ui/react-dropdown-menu';
@@ -951,6 +951,7 @@ const Members = () => {
                   </Button>
                 )}
               </div>
+              
               <Popover>
                 <PopoverTrigger asChild>
                   <Button variant="outline">
@@ -991,6 +992,9 @@ const Members = () => {
                       ))}
                     </div>
                   </div>
+
+                  
+
                 </PopoverContent>
               </Popover>
             </div>

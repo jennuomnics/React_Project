@@ -8,8 +8,8 @@ import {
   StartNow,
   Work,
 } from './components';
-import { ChangeEmail } from './components/changeEmail';
-import { ChangePassword } from './components/changePassword';
+import { ChangeEmail } from './components/ChangeEmail';
+import { ChangePassword } from './components/ChangePassword';
 import { TwoFactorCard } from './components/TwoFactorCard';
 
 export function AccountUserProfileContent() {

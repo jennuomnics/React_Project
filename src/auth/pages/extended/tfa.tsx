@@ -23,6 +23,19 @@ import { Input } from '@/components/ui/input';
 
 
 
+
+;
+
+
+
+
+
+
+
+
+
+
+
 const validationSchema = (usingAuthApp: boolean) =>
   Yup.object().shape({
     ...(usingAuthApp
@@ -94,67 +107,82 @@ const TwoFactorAuth = () => {
         validationSchema={validationSchema(usingAuthApp)}
         onSubmit={handleSubmit}
         enableReinitialize
-        validateOnChange={false} 
-        validateOnBlur={false} 
+        validateOnChange={false}
+        validateOnBlur={false}
       >
-        {({ values, setFieldValue }) => (
+        {({ values, setFieldValue, errors, touched }) => (
           <Form className="flex flex-col gap-4">
             <div className="flex flex-wrap justify-center gap-1.5">
               {usingAuthApp &&
                 values.authCode.map((value, index) => (
                   <Field name={`authCode[${index}]`} key={index}>
-                    {({ field }: any) => (
-                      <Input
-                        {...field}
-                        type="text"
-                        inputMode="numeric"
-                        pattern="\d*"
-                        autoComplete="one-time-code"
-                        maxLength={1}
-                        className="size-10 shrink-0 px-0 text-center"
-                        value={value}
-                        ref={(el) => (inputRefs.current[index] = el)}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          if (/^\d$/.test(val)) {
-                            const newCode = [...values.authCode];
-                            newCode[index] = val;
-                            setFieldValue('authCode', newCode);
-                            if (index < inputRefs.current.length - 1) {
-                              inputRefs.current[index + 1]?.focus();
+                    {({ field }: any) => {
+                      const hasError =
+                        errors.authCode &&
+                        touched.authCode &&
+                        errors.authCode[index];
+
+                      return (
+                        <Input
+                          {...field}
+                          type="text"
+                          inputMode="numeric"
+                          pattern="\d*"
+                          autoComplete="one-time-code"
+                          maxLength={1}
+                          className={`size-10 shrink-0 px-0 text-center border ${
+                            hasError ? 'border-red-500' : 'border-input'
+                          }`}
+                          value={value}
+                          ref={(el) => (inputRefs.current[index] = el)}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            if (/^\d$/.test(val)) {
+                              const newCode = [...values.authCode];
+                              newCode[index] = val;
+                              setFieldValue('authCode', newCode);
+                              if (index < inputRefs.current.length - 1) {
+                                inputRefs.current[index + 1]?.focus();
+                              }
+                            } else if (val === '') {
+                              const newCode = [...values.authCode];
+                              newCode[index] = '';
+                              setFieldValue('authCode', newCode);
                             }
-                          } else if (val === '') {
-                            const newCode = [...values.authCode];
-                            newCode[index] = '';
-                            setFieldValue('authCode', newCode);
-                          }
-                        }}
-                        onKeyDown={(e) => {
-                          if (
-                            e.key === 'Backspace' &&
-                            values.authCode[index] === ''
-                          ) {
-                            if (index > 0) {
-                              inputRefs.current[index - 1]?.focus();
+                          }}
+                          onKeyDown={(e) => {
+                            if (
+                              e.key === 'Backspace' &&
+                              values.authCode[index] === ''
+                            ) {
+                              if (index > 0) {
+                                inputRefs.current[index - 1]?.focus();
+                              }
                             }
-                          }
-                        }}
-                      />
-                    )}
+                          }}
+                        />
+                      );
+                    }}
                   </Field>
                 ))}
 
               {!usingAuthApp && (
                 <div className="w-full">
                   <Field name="recoveryCode">
-                    {({ field }: any) => (
-                      <Input
-                        {...field}
-                        type="text"
-                        placeholder="Enter your recovery code"
-                        className="w-full"
-                      />
-                    )}
+                    {({ field }: any) => {
+                      const hasError =
+                        errors.recoveryCode && touched.recoveryCode;
+                      return (
+                        <Input
+                          {...field}
+                          type="text"
+                          placeholder="Enter your recovery code"
+                          className={`w-full border ${
+                            hasError ? 'border-red-500' : 'border-input'
+                          }`}
+                        />
+                      );
+                    }}
                   </Field>
                   <ErrorMessage
                     name="recoveryCode"
@@ -162,7 +190,6 @@ const TwoFactorAuth = () => {
                     className="text-sm text-red-500 mt-1 text-center"
                   />
                 </div>
-                
               )}
             </div>
 

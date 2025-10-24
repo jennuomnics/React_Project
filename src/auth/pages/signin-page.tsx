@@ -160,6 +160,7 @@ console.log("",form.formState)
           onSubmit={form.handleSubmit(onSubmit)}
           className="block w-full space-y-5"
         >
+          {/* Header Section */}
           <div className="text-center space-y-1 pb-3">
             <h1 className="text-2xl font-semibold tracking-tight">Sign In</h1>
             <p className="text-sm text-muted-foreground">
@@ -167,45 +168,55 @@ console.log("",form.formState)
             </p>
           </div>
 
-          {/* <Alert appearance="light" size="sm" close={false}>
-          <AlertIcon>
-            <AlertCircle className="text-primary" />
-          </AlertIcon>
-          <AlertTitle className="text-accent-foreground">
-            Use <strong>demo@kt.com</strong> username and {` `}
-            <strong>demo123</strong> password for demo access.
-          </AlertTitle>
-        </Alert> */}
+          {/* Demo Alert Example (commented) */}
+          {/* 
+    <Alert appearance="light" size="sm" close={false}>
+      <AlertIcon>
+        <AlertCircle className="text-primary" />
+      </AlertIcon>
+      <AlertTitle className="text-accent-foreground">
+        Use <strong>demo@kt.com</strong> username and{' '}
+        <strong>demo123</strong> password for demo access.
+      </AlertTitle>
+    </Alert>
+    */}
 
-          {/* <div className="flex flex-col gap-3.5">
-          <Button
-            variant="outline"
-            type="button"
-            onClick={handleGoogleSignIn}
-            disabled={isGoogleLoading}
-          >
-            {isGoogleLoading ? (
-              <span className="flex items-center gap-2">
-                <LoaderCircleIcon className="size-4! animate-spin" /> Signing in with
-                Google...
-              </span>
-            ) : (
-              <>
-                <Icons.googleColorful className="size-5!" /> Sign in with Google
-              </>
-            )}
-          </Button>
-        </div> */}
+          {/* Google Sign-in Section (commented) */}
+          {/* 
+    <div className="flex flex-col gap-3.5">
+      <Button
+        variant="outline"
+        type="button"
+        onClick={handleGoogleSignIn}
+        disabled={isGoogleLoading}
+      >
+        {isGoogleLoading ? (
+          <span className="flex items-center gap-2">
+            <LoaderCircleIcon className="size-4! animate-spin" /> Signing in with
+            Google...
+          </span>
+        ) : (
+          <>
+            <Icons.googleColorful className="size-5!" /> Sign in with Google
+          </>
+        )}
+      </Button>
+    </div>
+    */}
 
-          {/* <div className="relative py-1.5">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">or</span>
-          </div>
-        </div> */}
+          {/* Divider (commented) */}
+          {/* 
+    <div className="relative py-1.5">
+      <div className="absolute inset-0 flex items-center">
+        <span className="w-full border-t" />
+      </div>
+      <div className="relative flex justify-center text-xs uppercase">
+        <span className="bg-background px-2 text-muted-foreground">or</span>
+      </div>
+    </div>
+    */}
 
+          {/* Error Alerts */}
           {error && (
             <Alert
               variant="destructive"
@@ -228,83 +239,109 @@ console.log("",form.formState)
             </Alert>
           )}
 
+          {/* Email Field */}
           <FormField
             control={form.control}
             name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="Your email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            render={({ field }) => {
+              const hasError = !!form.formState.errors.email;
+              return (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Your email"
+                      {...field}
+                      className={`w-full border transition-colors ${
+                        hasError
+                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                          : 'border-input focus:border-primary focus:ring-primary'
+                      }`}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
           />
 
+          {/* Password Field */}
           <FormField
             control={form.control}
             name="password"
-            render={({ field }) => (
-              <FormItem>
-                <div className="flex justify-between items-center gap-2.5">
-                  <FormLabel>Password</FormLabel>
-                </div>
-                <div className="relative">
-                  <Input
-                    placeholder="Your password"
-                    type={passwordVisible ? 'text' : 'password'} 
-                 className={`${showPasswordValid ? 'border-red-500 border' : ''}`}
-                    {...field}
-                  
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    mode="icon"
-                    onClick={() => setPasswordVisible(!passwordVisible)}
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                  >
-                    {passwordVisible ? (
-                      <EyeOff className="text-muted-foreground" />
-                    ) : (
-                      <Eye className="text-muted-foreground" />
-                    )}
-                  </Button>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
+            render={({ field }) => {
+              const hasError = !!form.formState.errors.password;
+              return (
+                <FormItem>
+                  <div className="flex justify-between items-center gap-2.5">
+                    <FormLabel>Password</FormLabel>
+                  </div>
+
+                  <div className="relative">
+                    <Input
+                      {...field}
+                      placeholder="Your password"
+                      type={passwordVisible ? 'text' : 'password'}
+                      className={`w-full pr-10 border transition-colors ${
+                        hasError
+                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                          : 'border-input focus:border-primary focus:ring-primary'
+                      }`}
+                    />
+
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      mode="icon"
+                      onClick={() => setPasswordVisible(!passwordVisible)}
+                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                    >
+                      {passwordVisible ? (
+                        <EyeOff className="text-muted-foreground" />
+                      ) : (
+                        <Eye className="text-muted-foreground" />
+                      )}
+                    </Button>
+                  </div>
+
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
           />
 
-          {/* <FormField
-          control={form.control}
-          name="rememberMe"
-          render={({ field }) => (
-            <FormItem className="flex flex-col space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <FormLabel className="text-sm font-normal cursor-pointer">
-                    Remember me
-                  </FormLabel>
-                </div>
-                <Link
-                  to="/auth/reset-password"
-                  className="text-sm font-semibold text-foreground hover:text-primary"
-                >
-                  Forgot Password?
-                </Link>
-              </div>
-            </FormItem>
-          )}
-        /> */}
+          {/* Remember Me & Forgot Password (commented) */}
+          {/* 
+    <FormField
+      control={form.control}
+      name="rememberMe"
+      render={({ field }) => (
+        <FormItem className="flex flex-col space-y-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormLabel className="text-sm font-normal cursor-pointer">
+                Remember me
+              </FormLabel>
+            </div>
+            <Link
+              to="/auth/reset-password"
+              className="text-sm font-semibold text-foreground hover:text-primary"
+            >
+              Forgot Password?
+            </Link>
+          </div>
+        </FormItem>
+      )}
+    />
+    */}
 
+          {/* Submit Button */}
           <Button type="submit" className="w-full" disabled={isProcessing}>
             {isProcessing ? (
               <span className="flex items-center gap-2">
@@ -314,16 +351,19 @@ console.log("",form.formState)
               'Sign In'
             )}
           </Button>
+
+          {/* Sign Up Link (commented) */}
           {/* 
-        <div className="text-center text-sm text-muted-foreground">
-          Don't have an account?{' '}
-          <Link
-            to="/auth/signup"
-            className="text-sm font-semibold text-foreground hover:text-primary"
-          >
-            Sign Up
-          </Link>
-        </div> */}
+    <div className="text-center text-sm text-muted-foreground">
+      Don't have an account?{' '}
+      <Link
+        to="/auth/signup"
+        className="text-sm font-semibold text-foreground hover:text-primary"
+      >
+        Sign Up
+      </Link>
+    </div>
+    */}
         </form>
       </Form>
     </>

@@ -93,6 +93,7 @@ import {
   StoreClientPage,
   WishlistPage,
 } from '@/pages/store-client';
+import { UserManagement} from '@/pages/user-management/UserManagement';
 import { Navigate, Route, Routes } from 'react-router';
 
 export function AppRoutingSetup() {
@@ -107,6 +108,7 @@ export function AppRoutingSetup() {
             path="/public-profile/profiles/default/"
             element={<ProfileDefaultPage />}
           />
+          <Route path='/user-management' element={<UserManagement />} />
           <Route
             path="/public-profile/profiles/creator"
             element={<ProfileCreatorPage />}
